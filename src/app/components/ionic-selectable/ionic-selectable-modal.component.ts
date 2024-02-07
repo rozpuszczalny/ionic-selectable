@@ -1,14 +1,28 @@
+import { NgClass, NgFor, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, HostBinding, HostListener, ViewChild } from '@angular/core';
-import { IonContent, IonInfiniteScroll, IonSearchbar, NavParams, IonicModule } from '@ionic/angular';
-import { IonicSelectableComponent } from './ionic-selectable.component';
 import { FormsModule } from '@angular/forms';
-import { NgIf, NgTemplateOutlet, NgFor, NgClass, NgStyle } from '@angular/common';
+import { IonContent, IonInfiniteScroll, IonSearchbar, IonicModule, NavParams } from '@ionic/angular';
+import { DynamicSizeVirtualScrollStrategy, RxVirtualFor, RxVirtualScrollViewportComponent } from '@rx-angular/template/experimental/virtual-scrolling';
+import { IonicSelectableComponent } from './ionic-selectable.component';
+import {RxLet} from '@rx-angular/template/let';
 
 @Component({
     selector: 'ionic-selectable-modal',
     templateUrl: './ionic-selectable-modal.component.html',
     standalone: true,
-    imports: [IonicModule, NgIf, NgTemplateOutlet, FormsModule, NgFor, NgClass, NgStyle]
+    imports: [
+      IonicModule,
+      NgIf,
+      NgTemplateOutlet,
+      FormsModule,
+      NgFor,
+      NgClass,
+      NgStyle, 
+      RxVirtualFor,
+      RxVirtualScrollViewportComponent,
+      DynamicSizeVirtualScrollStrategy,
+      RxLet
+    ]
 })
 export class IonicSelectableModalComponent implements AfterViewInit {
   @ViewChild(IonContent)
@@ -52,6 +66,17 @@ export class IonicSelectableModalComponent implements AfterViewInit {
     this.selectComponent._positionAddItemTemplate();
   }
 
+  itemHeightFn = (item: any) => {
+    const itemHeight = this.selectComponent.virtualScrollHeightFn(item);
+    if (!this.selectComponent.virtualScrollHeaderFn) {
+      return itemHeight;
+    }
+    const header = this.getHeader(item, this.selectComponent._filteredGroups[0].items.indexOf(item), this.selectComponent._filteredGroups[0].items);
+    const headerHeight = header ? this.selectComponent.virtualScrollHeaderHeightFn(item) : 0;
+
+    return itemHeight + headerHeight;
+  }
+
   constructor(
     private navParams: NavParams,
     public _element: ElementRef,
@@ -71,6 +96,18 @@ export class IonicSelectableModalComponent implements AfterViewInit {
     }
 
     this.selectComponent._setItemsToConfirm(this.selectComponent._selectedItems);
+  }
+
+  getHeader(item: any, index: number, items: any[]) {
+    if (!this.selectComponent.virtualScrollHeaderFn) {
+      return null;
+    }
+    const header = this.selectComponent.virtualScrollHeaderFn(item, index, items);
+    if (!header) {
+      return null;
+    }
+
+    return header;
   }
 
   ngAfterViewInit() {

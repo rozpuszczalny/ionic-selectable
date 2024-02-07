@@ -212,6 +212,11 @@ $item-padding-end-ios: 8px;
     }
   }
 
+  rx-virtual-scroll-viewport .ionic-selectable-virtual-box {
+    left: 0;
+    right: 0;
+  }
+
   .ionic-selectable-item-button {
     margin-left: 8px;
     margin-right: 8px;

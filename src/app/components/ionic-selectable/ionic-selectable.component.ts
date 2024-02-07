@@ -1,5 +1,5 @@
 import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
-import { Component, ContentChild, DoCheck, ElementRef, EventEmitter, HostBinding, Input, IterableDiffer, IterableDiffers, OnInit, Optional, Output, Renderer2, TemplateRef, ViewEncapsulation, forwardRef } from '@angular/core';
+import { Component, ContentChild, DoCheck, ElementRef, EventEmitter, HostBinding, Input, IterableDiffer, IterableDiffers, OnInit, Optional, Output, Renderer2, TemplateRef, TrackByFunction, ViewEncapsulation, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IonItem, ModalController, Platform } from '@ionic/angular';
 import { AnimationBuilder, ModalOptions } from '@ionic/core';
@@ -419,11 +419,23 @@ export class IonicSelectableComponent implements ControlValueAccessor, OnInit, D
    * See Ionic VirtualScroll [approxItemHeight](https://ionicframework.com/docs/api/components/virtual-scroll/VirtualScroll/).
    * See more on [GitHub](https://github.com/eakoriakin/ionic-selectable/wiki/Documentation#virtualscrollapproxitemheight).
    *
-   * @default '40px'
+   * @default '48px'
    * @memberof IonicSelectableComponent
    */
   @Input()
-  virtualScrollApproxItemHeight = '40px';
+  virtualScrollApproxItemHeight = '48px';
+
+  @Input()
+  virtualScrollHeightFn = (item: any) => isNaN(Number(this.virtualScrollApproxItemHeight)) ? 48 : Number(this.virtualScrollApproxItemHeight);
+
+  @Input()
+  virtualScrollApproxHeaderHeight = '31px';
+
+  @Input()
+  virtualScrollHeaderHeightFn = (item: any) => isNaN(Number(this.virtualScrollApproxHeaderHeight)) ? 31 : Number(this.virtualScrollApproxHeaderHeight);
+
+  @Input()
+  virtualScrollTrackBy: TrackByFunction<any> = (index: number, item: any) => this.itemValueField ? item[this.itemValueField] : index;
 
   /**
    * A placeholder for Searchbar.
@@ -796,9 +808,7 @@ export class IonicSelectableComponent implements ControlValueAccessor, OnInit, D
    * @memberof IonicSelectableComponent
    */
   @Input()
-  virtualScrollHeaderFn = () => {
-    return null;
-  }
+  virtualScrollHeaderFn?: (item: any, index: number, items: any[]) => string|null;
 
   constructor(
     private _modalController: ModalController,
