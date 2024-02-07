@@ -1,6 +1,6 @@
 {
-  "version": "5.0.3",
-  "name": "ionic-selectable",
+  "version": "5.1.0",
+  "name": "@rozpuszczalny/ionic-selectable",
   "title": "Ionic Selectable",
   "description": "An Ionic component similar to Ionic Select, that allows to search items, including async search, group, add, edit, delete items, and much more.",
   "author": {
@@ -11,7 +11,7 @@
   "homepage": "https://github.com/eakoriakin/ionic-selectable",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eakoriakin/ionic-selectable.git"
+    "url": "https://github.com/rozpuszczalny/ionic-selectable.git"
   },
   "bugs": {
     "url": "https://github.com/eakoriakin/ionic-selectable/issues"
