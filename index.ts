@@ -9,6 +9,7 @@ export * from './src/app/components/ionic-selectable/ionic-selectable-icon-templ
 export * from './src/app/components/ionic-selectable/ionic-selectable-item-end-template.directive';
 export * from './src/app/components/ionic-selectable/ionic-selectable-item-icon-template.directive';
 export * from './src/app/components/ionic-selectable/ionic-selectable-item-template.directive';
+export * from './src/app/components/ionic-selectable/ionic-selectable-items-template.directive';
 export * from './src/app/components/ionic-selectable/ionic-selectable-message-template.directive';
 export * from './src/app/components/ionic-selectable/ionic-selectable-modal.component';
 export * from './src/app/components/ionic-selectable/ionic-selectable-placeholder-template.directive';

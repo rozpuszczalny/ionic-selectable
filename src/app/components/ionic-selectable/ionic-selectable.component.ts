@@ -20,6 +20,7 @@ import { IonicSelectablePlaceholderTemplateDirective } from './ionic-selectable-
 import { IonicSelectableSearchFailTemplateDirective } from './ionic-selectable-search-fail-template.directive';
 import { IonicSelectableTitleTemplateDirective } from './ionic-selectable-title-template.directive';
 import { IonicSelectableValueTemplateDirective } from './ionic-selectable-value-template.directive';
+import {IonicSelectableItemsTemplateDirective} from './ionic-selectable-items-template.directive';
 
 @Component({
   selector: 'ionic-selectable',
@@ -761,6 +762,8 @@ export class IonicSelectableComponent implements ControlValueAccessor, OnInit, D
   valueTemplate!: TemplateRef<any>;
   @ContentChild(IonicSelectableItemTemplateDirective, { read: TemplateRef })
   itemTemplate!: TemplateRef<any>;
+  @ContentChild(IonicSelectableItemsTemplateDirective, { read: TemplateRef })
+  itemsTemplate!: TemplateRef<any>;
   @ContentChild(IonicSelectableItemEndTemplateDirective, { read: TemplateRef })
   itemEndTemplate!: TemplateRef<any>;
   @ContentChild(IonicSelectableTitleTemplateDirective, { read: TemplateRef })
@@ -1341,7 +1344,8 @@ export class IonicSelectableComponent implements ControlValueAccessor, OnInit, D
     this._hasObjects = !this._isNullOrWhiteSpace(this.itemValueField);
     // Grouping is supported for objects only.
     // Ionic VirtualScroll has it's own implementation of grouping.
-    this._hasGroups = Boolean(this._hasObjects && this.groupValueField && !this.hasVirtualScroll);
+    // If items template is used, grouping is unsupported
+    this._hasGroups = Boolean(this._hasObjects && this.groupValueField && !this.hasVirtualScroll && !this.itemsTemplate);
 
     if (this.ionItem) {
       this._ionItemElement = this._element.nativeElement.closest('ion-item');
