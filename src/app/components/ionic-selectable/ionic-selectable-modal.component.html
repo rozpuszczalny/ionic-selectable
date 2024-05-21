@@ -102,7 +102,7 @@
     (ionInfinite)="selectComponent._getMoreItems()">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
-  <rx-virtual-scroll-viewport *ngIf="selectComponent.hasVirtualScroll" [dynamic]="itemHeightFn">
+  <rx-virtual-scroll-viewport *ngIf="selectComponent.hasVirtualScroll && selectComponent._hasFilteredItems" [dynamic]="itemHeightFn">
     <div class="ionic-selectable-virtual-box" *rxVirtualFor="let item of selectComponent._filteredGroups[0].items; let index = index">
       <ng-container *ngIf="selectComponent.virtualScrollHeaderFn">
         <ng-container *rxLet="getHeader(item, index, selectComponent._filteredGroups[0].items); let header">

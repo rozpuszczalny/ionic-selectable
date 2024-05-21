@@ -953,6 +953,7 @@ export class IonicSelectableComponent implements ControlValueAccessor, OnInit, D
     // Ionic Searchbar doesn't clear bind with ngModel value.
     // Do it ourselves.
     this._searchText = '';
+    this._filterItems();
   }
 
   _filterItems() {
